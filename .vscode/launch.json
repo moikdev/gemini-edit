@@ -1,0 +1,10 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "name": "Run Gemini Edit",
+    "type": "extensionHost",
+    "request": "launch",
+    "args": ["--extensionDevelopmentPath=${workspaceFolder}/extensions/vscode"],
+    "outFiles": ["${workspaceFolder}/extensions/vscode/src/**/*.js"]
+  }]
+}

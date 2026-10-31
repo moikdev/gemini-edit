@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gemini Edit</title>
+  <link rel="stylesheet" href="sidepanel.css">
+  <script src="protocol.js" defer></script>
+  <script src="page-client.js" defer></script>
+  <script src="sidepanel.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><div><h1>gemini edit<span class="version"> / 01</span></h1><p>A little less copy. A little more code.</p></div></div>
+    <div class="connection-line"><span id="connectionDot" class="dot"></span><span id="connectionStatus" role="status">Not connected</span><button id="settingsButton" class="text-button" type="button" aria-expanded="true" aria-controls="pairing">Connection</button></div>
+  </header>
+
+  <main>
+    <section id="pairing" class="card">
+      <div class="eyebrow">01 / CONNECT YOUR EDITOR</div>
+      <h2>One small connection.</h2>
+      <p>In VS Code, run <strong>Gemini Edit: Copy Chrome Pairing Code</strong> from the Command Palette. Paste it below.</p>
+      <form id="pairForm">
+        <label for="pairingCode">Pairing code</label>
+        <input id="pairingCode" type="password" placeholder="gemini-edit:…" autocomplete="off" spellcheck="false" required>
+        <div class="button-row"><button class="primary" type="submit">Connect to VS Code <span aria-hidden="true">↗</span></button><button id="disconnectButton" type="button" class="secondary" hidden>Disconnect</button></div>
+      </form>
+      <p class="fine">Local connection only. Keep this code private.</p>
+    </section>
+
+    <div id="error" class="notice error" role="alert" hidden></div>
+    <div id="notice" class="notice" role="status" hidden></div>
+
+    <section class="workspace-bar" aria-label="Gemini chat">
+      <div><span class="eyebrow">GEMINI CHAT</span><p id="tabStatus">Choose a chat to work in.</p></div>
+      <button id="openGemini" class="secondary small" type="button">Open Gemini ↗</button>
+    </section>
+    <label class="select-label" for="geminiTab">Connected tab</label>
+    <select id="geminiTab"><option value="">Choose a Gemini tab…</option></select>
+    <p class="fine">Enter in VS Code inserts and sends its prompt in Gemini.</p>
+
+    <section id="emptyState" class="empty-state">
+      <div class="selection-icon" aria-hidden="true">{ <span>↗</span> }</div>
+      <div class="eyebrow">YOUR EDITOR, YOUR CONTEXT</div>
+      <h2>Start with a selection.</h2>
+      <p>Highlight code in VS Code, press <kbd id="shortcut">⌘ K</kbd>, and describe your change.</p>
+      <div class="steps"><span>01 Select</span><span>02 Ask Gemini</span><span>03 Review diff</span></div>
+    </section>
+
+    <section id="requestSection" hidden>
+      <div class="section-heading"><h2>Current edit</h2><span id="queueCount" class="pill"></span></div>
+      <label class="select-label" for="requestSelect">Request</label>
+      <select id="requestSelect"></select>
+      <article class="card request-card">
+        <div class="request-meta"><span id="operation" class="eyebrow"></span><span id="requestStatus" class="pill"></span></div>
+        <h3 id="filename"></h3>
+        <p id="instruction"></p>
+        <details><summary>Context sent to Gemini</summary><pre id="promptPreview" class="prompt-preview"></pre></details>
+        <div class="button-row"><button id="insertPrompt" class="primary" type="button">Insert prompt ↗</button><button id="sendPrompt" class="secondary" type="button">Send in Gemini</button></div>
+        <p class="fine">Inserting keeps your existing draft safe. Sending is your choice.</p>
+      </article>
+
+    </section>
+      <section id="replySection" class="reply-section" aria-label="Gemini response">
+        <div class="section-heading"><h2>Replacement code</h2><button id="refreshReply" type="button" class="text-button">Refresh</button></div>
+        <p id="replyStatus" class="muted" role="status">Waiting for Gemini.</p>
+        <p id="editTarget" class="fine">Choose a target in VS Code when reviewing.</p>
+        <button id="changeTarget" type="button" class="text-button">Choose a different target in VS Code</button>
+        <div id="blockPicker" hidden><label for="codeBlock" class="select-label">Code block</label><select id="codeBlock"></select><pre id="codePreview" class="code-preview" tabindex="0"></pre></div>
+        <button id="useResponse" class="primary full" type="button" disabled>Review diff in VS Code <span aria-hidden="true">→</span></button>
+        <p class="fine">Changes are applied only after you accept them in VS Code.</p>
+      </section>
+  </main>
+  <footer><span class="footer-dot" aria-hidden="true"></span> Your Gemini session. Your editor. No API key.</footer>
+</body>
+</html>

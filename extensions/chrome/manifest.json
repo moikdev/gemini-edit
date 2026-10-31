@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini Edit · VS Code Bridge",
+  "version": "0.1.3",
+  "description": "Move selected code between VS Code and the Gemini website, then review edits in your editor. No API key.",
+  "minimum_chrome_version": "116",
+  "permissions": ["sidePanel", "storage", "scripting"],
+  "host_permissions": ["http://127.0.0.1/*", "https://gemini.google.com/*"],
+  "background": { "service_worker": "service-worker.js" },
+  "action": { "default_title": "Open Gemini Edit" },
+  "side_panel": { "default_path": "sidepanel.html" },
+  "content_scripts": [{ "matches": ["https://gemini.google.com/*"], "js": ["gemini-adapter.js"], "run_at": "document_idle" }],
+  "content_security_policy": { "extension_pages": "script-src 'self'; object-src 'none'; connect-src http://127.0.0.1:*" }
+}

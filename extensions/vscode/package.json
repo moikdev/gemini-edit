@@ -1,0 +1,44 @@
+{
+  "name": "gemini-edit",
+  "displayName": "Gemini Edit",
+  "description": "Send selected code to the Gemini website and review edits in VS Code. No API key.",
+  "version": "0.1.3",
+  "publisher": "gemini-edit-local",
+  "license": "MIT",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "main": "./src/extension.js",
+  "extensionKind": ["ui"],
+  "activationEvents": ["onStartupFinished"],
+  "capabilities": { "untrustedWorkspaces": { "supported": false }, "virtualWorkspaces": { "supported": false } },
+  "contributes": {
+    "commands": [
+      { "command": "geminiEdit.edit", "title": "Gemini Edit: Edit Selection / Insert at Cursor" },
+      { "command": "geminiEdit.addContext", "title": "Gemini Edit: Add Selection / File to Context" },
+      { "command": "geminiEdit.setTarget", "title": "Gemini Edit: Use Selection / Cursor for Next Gemini Import" },
+      { "command": "geminiEdit.clearContext", "title": "Gemini Edit: Clear Attached Context" },
+      { "command": "geminiEdit.pair", "title": "Gemini Edit: Copy Chrome Pairing Code" },
+      { "command": "geminiEdit.requests", "title": "Gemini Edit: Show Requests" },
+      { "command": "geminiEdit.accept", "title": "Gemini Edit: Accept Edit", "icon": "$(check)" },
+      { "command": "geminiEdit.reject", "title": "Gemini Edit: Reject Edit", "icon": "$(close)" }
+    ],
+    "keybindings": [{ "command": "geminiEdit.edit", "key": "ctrl+k", "mac": "cmd+k", "when": "editorTextFocus && !editorReadonly && resourceScheme != gemini-edit" }],
+    "menus": {
+      "editor/context": [
+        { "command": "geminiEdit.edit", "group": "gemini@1", "when": "!editorReadonly && resourceScheme != gemini-edit" },
+        { "command": "geminiEdit.addContext", "group": "gemini@2", "when": "resourceScheme != gemini-edit" }
+      ],
+      "editor/title": [
+        { "command": "geminiEdit.accept", "group": "navigation@1", "when": "resourceScheme == gemini-edit" },
+        { "command": "geminiEdit.reject", "group": "navigation@2", "when": "resourceScheme == gemini-edit" }
+      ]
+    },
+    "configuration": {
+      "title": "Gemini Edit",
+      "properties": {
+        "geminiEdit.port": { "type": "integer", "default": 17373, "minimum": 1024, "maximum": 65525, "description": "Preferred local bridge port. If occupied, tries the next nine ports. Copy the pairing code again if the port changes. Restart VS Code after changing this setting." },
+        "geminiEdit.surroundingLines": { "type": "integer", "default": 20, "minimum": 0, "maximum": 100, "description": "Lines surrounding the edit target to include as read-only context." }
+      }
+    }
+  }
+}

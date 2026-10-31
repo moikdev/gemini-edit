@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Gemini Edit adapter fixture</title>
+<style>user-query,model-response,rich-textarea{display:block}rich-textarea .ql-editor{min-height:40px;white-space:pre-wrap}</style>
+</head><body>
+  <div id="conversation"></div>
+  <rich-textarea><div class="ql-editor" role="textbox" contenteditable="true"></div></rich-textarea>
+  <button class="send-button" aria-label="Send message">Send</button>
+  <pre id="test-results"></pre>
+  <script>globalThis.chrome={runtime:{id:'test-extension',onMessage:{addListener(fn){globalThis.messageListener=fn}}}};</script>
+  <!-- ADAPTER -->
+  <!-- TESTS -->
+</body></html>
